@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/components/app_drawer.dart';
-
-import 'package:shop/components/product_grid_item.dart';
+import 'package:shop/components/product_grid.dart';
 import 'package:shop/models/cart.dart';
 import 'package:shop/models/product_list.dart';
-
 import 'package:shop/utils/app_routes.dart';
 
-enum FilterOptions { favorite, all }
+
+enum FilterOptions {
+  favorite,
+  all,
+}
 
 class ProductsOverviewPage extends StatefulWidget {
   const ProductsOverviewPage({Key? key}) : super(key: key);
-
 
   @override
   State<ProductsOverviewPage> createState() => _ProductsOverviewPageState();
@@ -24,7 +25,6 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Provider.of<ProductList>(
       context,
@@ -71,12 +71,16 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
               },
               icon: const Icon(Icons.shopping_cart),
             ),
-            builder: (ctx, cart, child) =>
-                Badge(label: Text(cart.itemsCount.toString()), child: child!),
+            builder: (ctx, cart, child) => Badge(
+              label: Text(cart.itemsCount.toString()),
+              child: child!,
+            ),
           ),
         ],
       ),
-      body:_isLoading? const Center(child: CircularProgressIndicator()): ProductGrid(_showFavoriteOnly),
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : ProductGrid(_showFavoriteOnly),
       drawer: const AppDrawer(),
     );
   }
