@@ -12,6 +12,7 @@ import 'package:shop/pages/produc_form_page.dart';
 import 'package:shop/pages/producto_detail_page.dart';
 import 'package:shop/pages/products_page.dart';
 import 'package:shop/utils/app_routes.dart';
+import 'package:shop/utils/custom_route.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
           update: (ctx, auth, previous) {
             return ProductList(
               auth.token ?? '',
-               auth.userId ?? '',
+              auth.userId ?? '',
               previous?.items ?? [],
             );
           },
@@ -59,6 +60,12 @@ class MyApp extends StatelessWidget {
             secondary: Colors.deepOrange,
           ),
           fontFamily: 'Lato',
+          pageTransitionsTheme: PageTransitionsTheme(
+            builders: {
+              TargetPlatform.iOS: CustomPageTransitionsBuilder(),
+              TargetPlatform.android: CustomPageTransitionsBuilder(),
+            },
+          ),
         ),
         // home: const ProductsOverviewPage(),
         routes: {
